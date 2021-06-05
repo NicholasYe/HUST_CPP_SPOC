@@ -39,37 +39,70 @@ void MySet::show() {
 void MySet::add(Element m)
 {
 	scanFirst();
-	while (!isEnded()) 
+	do
 	{
-		if (m.n < element[current].n)
-			scanNext();
-		else if ((m.n > element[current].n) && (m.n < element[current + 1].n))
+		if (m.n == element[current].n)
 		{
-			int change = current;
-			current++;
-			for (; !isEnded; current++)
-			{
-				int temp = element[current + 1].n;
-				element[current + 1].n = element[current].n;
-				element[current].n = temp;
-			}
-			element[change].n = m.n;
+			counter--;
 			break;
 		}
-	}
+		else if (element[current].n == 0 && element[current + 1].n == 0)
+		{
+			element[current].n = m.n;
+			break;
+		}
+		else if (m.n > element[current].n && element[current + 1].n == 0)
+		{
+			element[current + 1] = m.n;
+			break;
+		}
+		else if (m.n > element[current].n && m.n > element[current + 1].n)
+		{
+			current++;
+		}
+		else if (m.n > element[current].n && m.n < element[current + 1].n)
+		{
+			for (int m = counter; m > current; m--)
+			{
+				element[m].n = element[m - 1].n;
+			}
+			element[current + 1].n = m.n;
+			break;
+		}
+		else if (m.n < element[0].n)
+		{
+			for (int m = counter; m > 0; m--)
+			{
+				element[m].n = element[m - 1].n;
+			}
+			element[0].n = m.n;
+			break;
+		}
+		scanNext();
+	} while (1);
 	counter++;
 }
 
 void MySet::remove(Element e)
 {
-
-
-
-
-
-
-
-	counter--;
+	scanFirst();
+	do
+	{
+		if (e.n == element[current].n)
+		{
+			for (int i = current; i < 99; i++)
+			{
+				element[i].n = element[i + 1].n;
+			}
+			counter--;
+			element[99].n = 0;
+			break;
+		}
+		else
+		{
+			scanNext();
+		}
+	} while (element[current].n != 0);
 }
 
 int main() {
@@ -78,7 +111,6 @@ int main() {
 		cin >> a[i];
 	MySet set;
 	i = 0;
-
 	set.add(Element(a[i++]));
 	set.add(Element(a[i++]));
 	set.add(Element(a[i++]));
