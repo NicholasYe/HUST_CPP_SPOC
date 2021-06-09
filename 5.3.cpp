@@ -15,7 +15,6 @@ int main()
 	for (int i = 0; i < 6; i++)
 	{
 		int Now = 0;
-
 		int Cnt = 0;
 		while (arr1[i][Now] != '\0')
 		{
